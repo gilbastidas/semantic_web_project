@@ -1,0 +1,6 @@
+from django import forms
+
+class SearchForm(forms.Form):
+    sparql_endpoint = forms.CharField(max_length=500, widget=forms.TextInput(attrs={'class': 'form-control'}), initial="http://dbpedia.org/sparql")
+    uri = forms.CharField(max_length=500, widget=forms.TextInput(attrs={'class': 'form-control'}), )
+
