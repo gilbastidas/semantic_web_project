@@ -3,18 +3,47 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Rango</title>
+    <title>Semantic Search</title>
+    <link rel="stylesheet" type="text/css" href="{% static "bootstrap/css/bootstrap.css"%}" />
+        <link rel="stylesheet" type="text/css" href="{% static "resources/css/custom.css"%}" />
+
+		<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"> </script>
+		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"> </script><![endif]-->
 </head>
 <body>
-<h1>Rango says....</h1>
-<div>
-    hey there partner! <br/>
-    <strong>{{ boldmessage }}</strong> <br />
-</div>
-<div>
-    <a href="/semanticquery/about/">About</a><br/>
-    <a href="/semanticquery/search_query/">search</a><br/>
-    <img src="{% static "images/rango.jpg" %}" alt="Pictures of Rango" />
-</div>
+
+
+<div class="row" id="search_box">
+		  <div class="col-md-offset-2 col-md-8">
+			<div class="panel panel-default">
+				<h1>Linked data</h1>
+				<div class="panel-body main_panel">
+                    <form id="search_query" method="get" action="">
+                        {% csrf_token %}
+                        {{ form.non_field_errors }}
+                        <div class="form-group">
+                            {{ form.sparql_endpoint.errors }}
+                            <label for="{{ form.sparql_endpoint.1 }}">SPARQL Endpoint</label>
+                            {{ form.sparql_endpoint }}
+					    </div>
+
+                        <div class="form-group">
+                            {{ form.uri.errors }}
+                            <label for="{{ form.uri.2 }}">URI</label>
+                            {{ form.uri }}
+					    </div>
+
+                        <input class="btn btn-default" type="submit" value="Search">
+
+                    </form>
+
+				</div> <!-- ./panel-body -->
+			</div>
+		  </div>
+		</div> <!-- ./search_box -->
+
+        <script src="{% static "bootstrap/js/jquery-3.1.0.min.js" %}"></script>
+		<script src="{% static "bootstrap/js/bootstrap.js" %}"></script>
 </body>
 </html>

@@ -1,0 +1,21 @@
+/* ==== Custom styles === */
+/* Search box */
+#search_box
+{
+	margin-top: 100px;
+}
+
+.panel 
+{
+    border: none;
+}
+
+.form-control {
+    border-radius: 0px;
+}
+
+.btn {
+    border-radius: 0px;
+}
+body {
+}

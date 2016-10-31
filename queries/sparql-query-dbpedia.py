@@ -1,4 +1,4 @@
-from SPARQLWrapper import SPARQLWrapper, JSON
+
 
 sparql = SPARQLWrapper("http://semtech.mty.itesm.mx:3030/Fototeca/sparql")
 sparql.setQuery("""

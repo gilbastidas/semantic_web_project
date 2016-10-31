@@ -4,7 +4,64 @@
     <meta charset="UTF-8">
     <title>Semantic query results</title>
 </head>
+<script type='text/javascript'>
+window.onload=function(){
+var options = [
+        set0 = {{ query_properties|safe }},
+        set1 = {{ query_objects|safe }}
+    ];
+
+function makeUL(array) {
+    // Create the list element:
+    var list = document.createElement('table');
+
+    for(var i = 0; i < array.length; i++) {
+        // Create the list item:
+        var item = document.createElement('li');
+
+
+        // Set its contents:
+        item.appendChild(document.createTextNode(array[i]));
+
+        // Add it to the list:
+        list.appendChild(item);
+    }
+    var body = document.body,
+            tbl  = document.createElement('table');
+        tbl.style.width  = '100px';
+        tbl.style.border = '1px solid black';
+
+        for(var i = 0; i < array.length; i++){
+            var tr = tbl.insertRow();
+            for(var j = 0; j < 2; j++){
+                    var td = tr.insertCell();
+                    td.appendChild(document.createTextNode('Cell'));
+                    td.style.border = '1px solid black';
+            }
+        }
+        body.appendChild(tbl);
+
+
+    // Finally, return the constructed list:
+    return list;
+}
+
+// Add the contents of options[0] to #foo:
+document.getElementById('foo').appendChild(makeUL(options[0]));
+document.getElementById('foo2').appendChild(makeUL(options[1]));
+
+
+    function tableCreate(){
+
+    }
+    tableCreate();
+
+
+}
+
+</script>
 <body>
-I'm in query results {{ sparql_endpoint }}
+<div id="foo"></div>
+<div id="foo2"></div>
 </body>
 </html>
