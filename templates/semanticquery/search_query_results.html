@@ -11,32 +11,23 @@ var options = [
         set1 = {{ query_objects|safe }}
     ];
 
-function makeUL(array) {
-    // Create the list element:
-    var list = document.createElement('table');
-
-    for(var i = 0; i < array.length; i++) {
-        // Create the list item:
-        var item = document.createElement('li');
+function makeUL(array, array2) {
 
 
-        // Set its contents:
-        item.appendChild(document.createTextNode(array[i]));
-
-        // Add it to the list:
-        list.appendChild(item);
-    }
-    var body = document.body,
-            tbl  = document.createElement('table');
-        tbl.style.width  = '100px';
+        var body = document.body,
+        tbl  = document.createElement('table');
+        //tbl.style.width  = '100px';
         tbl.style.border = '1px solid black';
 
         for(var i = 0; i < array.length; i++){
             var tr = tbl.insertRow();
-            for(var j = 0; j < 2; j++){
+            for(var j = 0; j < 1; j++){
                     var td = tr.insertCell();
-                    td.appendChild(document.createTextNode('Cell'));
-                    td.style.border = '1px solid black';
+                    var td2 = tr.insertCell();
+                    td.appendChild(document.createTextNode(array[i]));
+                    //td.style.border = '1px solid black';
+                    td2.appendChild(document.createTextNode(array2[i]));
+                    //td2.style.border = '1px solid black';
             }
         }
         body.appendChild(tbl);
@@ -47,8 +38,7 @@ function makeUL(array) {
 }
 
 // Add the contents of options[0] to #foo:
-document.getElementById('foo').appendChild(makeUL(options[0]));
-document.getElementById('foo2').appendChild(makeUL(options[1]));
+document.getElementById('foo').appendChild(makeUL(options[0],options[1]));
 
 
     function tableCreate(){
@@ -62,6 +52,5 @@ document.getElementById('foo2').appendChild(makeUL(options[1]));
 </script>
 <body>
 <div id="foo"></div>
-<div id="foo2"></div>
 </body>
 </html>
