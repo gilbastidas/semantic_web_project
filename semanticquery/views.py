@@ -28,16 +28,18 @@ def index(request):
 
         sparql = SPARQLWrapper("http://semtech.mty.itesm.mx:3030/Fototeca/sparql")
         sparql.setQuery("""
-                    SELECT (count(?object) as ?relations) ?foto2
+                    PREFIX edm: <http://purl.org/dc/elements/1.1/>
+                    SELECT ?picurl (count(?object) as ?relations) ?foto2
                     WHERE { <""" + uri + """>
-                       ?property1 ?object  .
-                      ?foto2 ?property2 ?object .
-                      filter(?property1 = ?property2)
-                      ?foto2 a <http://semtech.mty.itesm.mx:8888/marmotta/resource/fototeca/Picture> .
-                      filter(?property1 != <http://www.w3.org/1999/02/22-rdf-syntax-ns#type>)
-                      filter(?foto2 != <""" + uri + """>)
+                        ?property1 ?object  .
+                        OPTIONAL { ?foto2 edm:identifier ?picurl }.
+                        ?foto2 ?property2 ?object .
+                        filter(?property1 = ?property2)
+                        ?foto2 a <http://semtech.mty.itesm.mx:8888/marmotta/resource/fototeca/Picture> .
+                        filter(?property1 != <http://www.w3.org/1999/02/22-rdf-syntax-ns#type>)
+                        filter(?foto2 != <""" + uri + """>)
                     }
-                    group by ?foto2
+                    group by ?foto2 ?picurl
                     ORDER BY DESC(?relations)
                     LIMIT 10
                 """)
@@ -46,6 +48,7 @@ def index(request):
         concepts = []
         qobjects = []
         qrelations = []
+        qpicurl = []
 
 
 
@@ -54,7 +57,8 @@ def index(request):
             #print result["property1"]['value'], result["relations"]['value']
             qobjects.append(result["foto2"]['value'])
             qrelations.append(result["relations"]['value'])
-        context_dict = { 'query_objects': json.dumps(qobjects), 'query_relations': json.dumps(qrelations), 'uri_view': uri, 'resultados': json.dumps(results["results"]["bindings"])}
+            qpicurl.append(result["picurl"]['value'])
+        context_dict = { 'query_objects': json.dumps(qobjects), 'query_relations': json.dumps(qrelations), 'query_picurl': json.dumps(qpicurl), 'uri_view': uri, 'resultados': json.dumps(results["results"]["bindings"])}
 
         # return HttpResponseRedirect('/semanticquery/search_query_results/')
         return render(request, 'semanticquery/search_query_results.html', context_dict)

@@ -17,7 +17,8 @@
 window.onload=function(){
 var options = [
         set0 = {{ query_objects|safe }},
-        set1 = {{ query_relations|safe }}
+        set1 = {{ query_relations|safe }},
+        set2 = {{ query_picurl|safe }}
     ];
 
 function makeUL(array, array2, array3) {
@@ -30,15 +31,28 @@ function makeUL(array, array2, array3) {
         tbl.className="table table-striped";
         //tbl.style.border = '1px solid black';
 
+
+
         for(var i = 0; i < array.length; i++){
             var tr = tbl.insertRow();
             for(var j = 0; j < 1; j++){
                     var td = tr.insertCell();
                     var td2 = tr.insertCell();
+                    var td3 = tr.insertCell();
                     td.appendChild(document.createTextNode(array[i]));
                     //td.style.border = '1px solid black';
                     td2.appendChild(document.createTextNode(array2[i]));
                     //td2.style.border = '1px solid black';
+                    td3.appendChild(document.createTextNode(array3[i]));
+                    var thisLiTag = document.createElement('li');
+
+var thisATag = document.createElement('a');
+thisATag.setAttribute('href', encodeURI('test/site'));
+
+var thisTextNode = document.createTextNode('www.google.com');
+thisATag.appendChild(thisTextNode);
+
+thisLiTag.appendChild(thisATag);
             }
         }
         body.appendChild(tbl);
@@ -49,7 +63,7 @@ function makeUL(array, array2, array3) {
 }
 
 // Add the contents of options[0] to #foo:
-document.getElementById('foo').appendChild(makeUL(options[0],options[1]));
+document.getElementById('foo').appendChild(makeUL(options[0],options[1], options[2]));
 
 
     function tableCreate(){
