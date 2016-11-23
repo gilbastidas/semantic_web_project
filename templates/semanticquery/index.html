@@ -32,6 +32,8 @@
                             {{ form.uri.errors }}
                             <label for="{{ form.uri.2 }}">URI</label>
                             {{ form.uri }}
+                            {{ form.prefix.as_hidden }}
+                            {{ form.varProperty.as_hidden }}
 					    </div>
 
                         <input class="btn btn-default" type="submit" value="Search">
