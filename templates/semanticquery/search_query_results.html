@@ -13,6 +13,8 @@
         <script src="//d3plus.org/js/d3.js"></script>
         <script src="//d3plus.org/js/d3plus.js"></script>
 </head>
+
+<!-- Mostrar resultados en el body arreglos de resultados-->
 <script type='text/javascript'>
 window.onload=function(){
 var options = [
@@ -87,7 +89,9 @@ document.getElementById('foo').appendChild(makeUL(options[0],options[1], options
 <script>
 
   var uri = '{{ uri_view }}'
-
+   objectResults = {{ query_objects|safe }};
+   relationsResults = {{ query_relations|safe }};
+   imageUrlResults = {{ query_picurl|safe }};
   var sample_data = [
     {"property": {"type": "uri", "value": "http://purl.org/dc/elements/1.1/identifier"},
         "object": {"datatype": "http://www.w3.org/2001/XMLSchema#string", "type": "typed-literal", "value": "http://foto.mty.itesm.mx/spaces/mediastock/work/2453/120621_105237F.jpg"}},
@@ -97,7 +101,7 @@ document.getElementById('foo').appendChild(makeUL(options[0],options[1], options
     {"property": {"type": "uri", "value": "http://purl.org/dc/terms/temporal"},
         "object": {"type": "uri", "value": "http://semtech.mty.itesm.mx:8888/marmotta/resource/fototeca/Y1939"}},
     {"property": {"type": "uri", "value": "http://purl.org/dc/elements/1.1/description"},
-        "object": {"datatype": "http://www.w3.org/2001/XMLSchema#string", "type": "typed-literal", "value": "Templo construido en 1895"}},
+        "object": {"datatype": "http://www.w3.org/2001/XMLSchema#string", "type": "typed-literal", "value": "Prueba Templo construido en 1895"}},
     {"property": {"type": "uri", "value": "http://purl.org/dc/elements/1.1/title"},
         "object": {"datatype": "http://www.w3.org/2001/XMLSchema#string", "type": "typed-literal", "value": "[Santuario de Guadalupe]"}},
     {"property": {"type": "uri", "value": "http://purl.org/dc/terms/isPartOf"},
@@ -107,15 +111,13 @@ document.getElementById('foo').appendChild(makeUL(options[0],options[1], options
   ]
 
 
-  var connections = [
-    {"source": "http://foto.mty.itesm.mx/spaces/mediastock/work/2453/120621_105237F.jpg", "target": uri},
-    {"source": "http://semtech.mty.itesm.mx:8888/marmotta/resource/fototeca/epoca_a34-gobierno_de_lazaro_cardenas_del_rio_1934-1940", "target": uri},
-    {"source": "[Santuario de Guadalupe]", "target": uri},
-    {"source": "http://semtech.mty.itesm.mx:8888/marmotta/resource/fototeca/collection_iglesias", "target": uri},
-    {"source": "http://semtech.mty.itesm.mx:8888/marmotta/resource/fototeca/monterrey_nl", "target": uri},
-    {"source": "Templo construido en 1895", "target": uri},
-    {"source": "http://semtech.mty.itesm.mx:8888/marmotta/resource/fototeca/Y1939", "target": uri},
-  ]
+ var connections = []
+for (i = 0; i < objectResults.length; i++) {
+objetox = objectResults[i];
+connections [i] = {"source": objetox, "target": uri};
+}
+
+
 
   var visualization = d3plus.viz()
     .container("#viz")
